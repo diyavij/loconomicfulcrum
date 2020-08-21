@@ -1,0 +1,23 @@
+.row {
+    text-align: center;
+    padding: 0% 20%;
+    padding-bottom: 5%;
+    
+}
+body, body *{
+    overflow-x: hidden;
+    font-family: 'Ubuntu', sans-serif;
+}
+.btn {
+    margin: 1%;
+}
+
+.card {
+    margin: 2rem;
+}
+
+.card-img-top {
+    object-fit: cover;
+    width: 283px;
+    height: 250px;
+    }

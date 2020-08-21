@@ -1,0 +1,45 @@
+body {
+    text-align: center;
+    font-family: 'Ubuntu', sans-serif;
+    overflow-x: hidden;
+}
+
+.btn {
+    margin: 1%;
+}
+
+.card {
+    margin: 2rem;
+}
+
+.card-img-top {
+  object-fit: cover;
+  width: 281.5px;
+  height: 250px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    padding-top: 1rem;
+}
+
+.curved {
+    margin: 0.5rem 5rem 1rem 5rem;
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 7%;
+    text-align: center;
+    display: inline-block;
+    box-shadow: 3.5px 3.5px rgb(22, 22, 22);
+
+}
+
+input[type=file] {
+    margin: 0 auto;
+}
+
+.centered {
+    background-color: #ffffff;
+}
+.container-fluid{
+    padding:0;
+}
