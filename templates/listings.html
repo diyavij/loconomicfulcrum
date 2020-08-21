@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <meta charset="UTF-8">
+    <title>Loconomic Fulcrum Consumer Portal</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}"/>
+    <script src="{{url_for('static', filename='js/scripts.js')}}"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap" rel='stylesheet' type='text/css'>
+</head>
+<body>
+  <form action="/updateQuantity" method="POST">
+    <div class="modal fade" id="qtModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">Quantity</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <center><label>Enter Quantity</label></center>
+                <center><input style="width: 45%;" type="number" class="form-control" name="qt" required></center>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button class="btn btn-primary" type="submit">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+<div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">Loconomic Fulcrum</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/listings">Consumer Portal<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/insertTxt">Business Portal</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/jobs">Hiring Portal</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/add">Employee/Volunteer Portal</a>
+          </li>
+        </ul>
+        <span class="navbar-text">
+            Hello, <b>{{users[0][1]}} {{users[0][2]}}</b>!
+        </span>
+        <a href="/signout" class="btn btn-outline-secondary">Signout</a>
+      </div>
+    </nav>
+    <h1>Search for items and buy them!</h1>
+    <div class="row justify-content-center">
+        <form class="form form-check-inline" action="/search" method="get">
+            <input type="text" class="form-control" name="query" placeholder="Search" aria-describedby="button-addon2">
+            <button type="submit" class="btn btn-success mb-2" id="button-addon2">Search</button>
+          
+          
+            <br />
+            {% if request.path == "/search" %}
+            <a href="/listings">Clear Search</a>
+            {% endif %}
+        </form>
+    </div>
+    {% for item in response %}
+    <div class="row justify-content-center">
+        <div class="card-deck">
+
+          <div class="card" style="width: 283px;">
+            <img class="card-img-top" src="data:;base64,{{item[0][8]}}" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">{{item[0][1]}}</h5>
+                <h1 class="card-text">${{item[0][3]}}</h1>
+                <p>per unit</p>
+                <p class="card-text">{{item[0][2]}}</p>
+                <form action="/updateQuantity" method="post">
+                  <p>Enter quantity</p>
+                  <input type="number" name="quant" required><br/>
+                    <input type="hidden" value="{{item[0][0]}}" name="idQuant">
+                    <button type="submit" class="btn btn-outline-success" required>Buy</button>
+                </form>
+            </div>
+            <div class="card-footer">
+                <small class="text-muted">Posted on: <b>{{item[0][4]}}</b></small>
+                <br />
+                <small class="text-muted">Poster's Email: <b>{{item[0][5]}}</b></small>
+                <br />
+                <small class="text-muted">Quantity Left: <b>{{item[0][6]}}</b></small>
+            </div>
+          </div>
+          <div class="card" style="width: 283px;">
+            <img class="card-img-top" src="data:;base64,{{item[1][8]}}" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">{{item[1][1]}}</h5>
+                <h1 class="card-text">${{item[1][3]}}</h1>
+                <p>per unit</p>
+                <p class="card-text">{{item[1][2]}}</p>
+                <form action="/updateQuantity" method="post">
+                  <p>Enter quantity</p>
+                  <input type="number" name="quant" required><br/>
+                    <input type="hidden" value="{{item[1][0]}}" name="idQuant">
+                    <button type="submit" class="btn btn-outline-success" required>Buy</button>
+                </form>
+            </div>
+            <div class="card-footer">
+                <small class="text-muted">Posted on: <b>{{item[1][4]}}</b></small>
+                <br />
+                <small class="text-muted">Poster's Email: <b>{{item[1][5]}}</b></small>
+                <br />
+                <small class="text-muted">Quantity Left: <b>{{item[1][6]}}</b></small>
+            </div>
+          </div>
+          <div class="card" style="width: 283px;">
+            <img class="card-img-top" src="data:;base64,{{item[2][8]}}" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">{{item[2][1]}}</h5>
+                <h1 class="card-text">${{item[2][3]}}</h1>
+                <p>per unit</p>
+                <p class="card-text">{{item[2][2]}}</p>
+                <form action="/updateQuantity" method="post">
+                  <p>Enter quantity</p>
+                  <input type="number" name="quant" required><br/>
+                    <input type="hidden" value="{{item[2][0]}}" name="idQuant">
+                    <button type="submit" class="btn btn-outline-success" required>Buy</button>
+                </form>
+            </div>
+            <div class="card-footer">
+                <small class="text-muted">Posted on: <b>{{item[2][4]}}</b></small>
+                <br />
+                <small class="text-muted">Poster's Email: <b>{{item[2][5]}}</b></small>
+                <br />
+                <small class="text-muted">Quantity Left: <b>{{item[2][6]}}</b></small>
+            </div>
+          </div>
+
+        </div>
+    </div>
+    {% endfor %}
+    {% if of1 %}
+    <div class="row justify-content-center">
+        <div class="card-deck">
+          <div class="card" style="width: 283px;">
+              <img class="card-img-top" src="data:;base64,{{overflowOne[0][8]}}" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">{{overflowOne[0][1]}}</h5>
+                <h1 class="card-text">${{overflowOne[0][3]}}</h1>
+                <p>per unit</p>
+                
+                <form action="/updateQuantity" method="post">
+                  <p>Enter quantity</p>
+                  <input type="number" name="quant" required><br/>
+                    <input type="hidden" value="{{overflowOne[0][0]}}" name="idQuant">
+                    <button type="submit" class="btn btn-outline-success" required>Buy</button>
+                </form>
+            </div>
+            <div class="card-footer">
+                <small class="text-muted">Posted on: <b>{{overflowOne[0][4]}}</b></small>
+                <br />
+                <small class="text-muted">Poster's Email: <b>{{overflowOne[0][5]}}</b></small>
+                <br />
+                <small class="text-muted">Quantity Left: <b>{{overflowOne[0][6]}}</b></small>
+            </div>
+          </div>
+        </div>
+    </div>
+    {% endif %}
+    {% if of2 %}
+    <div class="row justify-content-center">
+        <div class="card-deck">
+          <div class="card" style="width: 283px;">
+            <img class="card-img-top" src="data:;base64,{{overflowTwo[0][8]}}" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">{{overflowTwo[0][1]}}</h5>
+                <h1 class="card-text">${{overflowTwo[0][3]}}</h1>
+                <p>per unit</p>
+                <p class="card-text">{{overflowTwo[0][2]}}</p>
+                <form action="/updateQuantity" method="post">
+                  <p>Enter quantity</p>
+                  <input type="number" name="quant" required><br/>
+                    <input type="hidden" value="{{overflowTwo[0][0]}}" name="idQuant">
+                    <button type="submit" class="btn btn-outline-success" required>Buy</button>
+                </form>
+            </div>
+            <div class="card-footer">
+                <small class="text-muted">Posted on: <b>{{overflowTwo[0][4]}}</b></small>
+                <br />
+                <small class="text-muted">Poster's Email: <b>{{overflowTwo[0][5]}}</b></small>
+                <br />
+                <small class="text-muted">Quantity Left: <b>{{overflowTwo[0][6]}}</b></small>
+            </div>
+          </div>
+          <div class="card" style="width: 283px;">
+            <img class="card-img-top" src="data:;base64,{{overflowTwo[1][8]}}" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">{{overflowTwo[1][1]}}</h5>
+                <h1 class="card-text">${{overflowTwo[1][3]}}</h1>
+                <p>per unit</p>
+                <p class="card-text">{{overflowTwo[1][2]}}</p>
+                <form action="/updateQuantity" method="post">
+                  <p>Enter quantity</p>
+                  <input type="number" name="quant" required><br/>
+                  <input type="hidden" value="{{overflowTwo[1][0]}}" name="idQuant">
+                  <button type="submit" class="btn btn-outline-success">Buy</button>
+                </form>
+            </div>
+            <div class="card-footer">
+                <small class="text-muted">Posted on: <b>{{overflowTwo[1][4]}}</b></small>
+                <br />
+                <small class="text-muted">Poster's Email: <b>{{overflowTwo[1][5]}}</b></small>
+                <br />
+                <small class="text-muted">Quantity Left: <b>{{overflowTwo[1][6]}}</b></small>
+            </div>
+          </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+</body>
+</html>

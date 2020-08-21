@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <meta charset="UTF-8">
+    <title>Loconomic Fulcrum Signup</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}"/>
+    <script src="{{url_for('static', filename='js/scripts.js')}}"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap" rel='stylesheet' type='text/css'>
+</head>
+<body>
+<div class="container-fluid">
+  <div class="card">
+    <div class="card-body">
+    <div class="centered">
+        <h1>Signup</h1>
+        {% if message %}
+            {% if message == "That email address already has an account." %}
+               <div class="alert alert-danger alert-dismissable" role="alert">
+                 <button type="button" class="close" data-dismiss="alert" aria-label ="close">
+                     <span aria-hidden="true">&times;</span>
+                 </button>
+                 {{message}}
+                </div>
+            {% else%}
+               <div class="alert alert-info alert-dismissable" role="alert">
+                 <button type="button" class="close" data-dismiss="alert" aria-label ="close">
+                     <span aria-hidden="true">&times;</span>
+                 </button>
+                 {{message}}
+                </div>
+            {% endif %}
+        {% endif %}
+
+        <form action="/signup" method="post" oninput='passSignupConf.setCustomValidity(passSignup.value != passSignupConf.value ? "Passwords do not match." : "")'>
+          <div class="form-group">
+            <label for="fname">First Name: </label>
+            <input type="text" name="fname" class="form-control" id="fname" required>
+          </div>
+          <div class="form-group">
+            <label for="lname">Last Name: </label>
+            <input type="text" name="lname" class="form-control" id="lname" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email: </label>
+            <input type="email" name="userSignup" class="form-control" id="email" aria-describedby="userHelp" required>
+            <small id="userHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+          </div>
+          <div class="form-group">
+            <label for="txtNewPassword">Password: </label>
+            <input type="password" name="passSignup" class="form-control" id="txtNewPassword" required>
+          </div>
+          <div class="form-group">
+            <label for="txtConfirmPassword">Confirm Password: </label>
+            <input type="password" name="passSignupConf" class="form-control" id="txtConfirmPassword" required>
+          </div>
+          <button type="submit" class="btn btn-info">Signup</button>
+        </form>
+    </div>
+    <h6><a href="/">Return to login</a></h6>
+    </div>
+  </div>
+
+
+    <!-- Bootstrap Javascript Code -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+</div>
+<style>
+  .card{
+    margin-top: 5rem;
+    margin-left: 20rem;
+    margin-right: 20rem;
+    margin-bottom: 5rem;
+    border-radius: 7%;
+    box-shadow: 3.5px 3.5px rgb(22, 22, 22);
+  }
+  body{
+    background-color: rgb(66, 66, 66);
+  }
+</style>
+</body>
+</html>

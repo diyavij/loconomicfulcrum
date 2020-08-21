@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Loconomic Fulcrum Hiring Portal</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link type="text/css" rel="stylesheet" href="{{url_for('static', filename='styles2.css')}}"/>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap" rel="stylesheet">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">Loconomic Fulcrum</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/listings">Consumer Portal</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/insertTxt">Business Portal</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="/jobs">Hiring Portal <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/add">Employee/Volunteer Portal</a>
+          </li>
+        </ul>
+        <span class="navbar-text">
+            Hello, <b>{{users[0][1]}} {{users[0][2]}}</b>!
+        </span>
+        <a href="/signout" class="btn btn-outline-secondary">Signout</a>
+      </div>
+    </nav>
+</head>
+<body>
+    
+    <form action="/jobs" method="POST">
+    <div class="modal fade" id="exampleModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">Hire</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <center><label>Enter your Company Name</label></center>
+                <center><input style="width: 45%;" type="text" class="form-control" name="cname" required></center>
+                <center><label>What time do you want them to start?</label></center>
+                <center><input style="width: 45%;" type="time" class="form-control" name="cstime" required></center>
+                <center><label>What time do you want them to end?</label></center>
+                <center><input style="width: 45%;" type="time" class="form-control" name="cetime" required></center>
+                <center><label>How much hourly do you want to pay them?(follow minimum wage rules and enter 0 if they are a volunteer)</label></center>
+                <center><input style="width: 45%;" type="number" class="form-control" name="cpay" required></center>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button class="btn btn-primary" type="submit">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <center><h1 class="top">All Jobs</h1></center>
+        <div class="row">
+        <div class="card-deck">
+        {% for item in response %}
+          <div class="card mb-4" style="min-width: 17rem; max-width: 17rem;">
+            <img class="card-img-top w-auto" src="data:;base64,{{item[7]}}" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">{{item[1]}}</h5>
+                <label class="card-text">Email: <label>{{item[2]}}</label></label><br/>
+                <label class="card-text">Start time: <label>{{item[3]}}</label></label><br/>
+                <label class="card-text">End time: <label>{{item[4]}}</label></label><br/>
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Hire</button><br/>
+                {%if item[1]=="Job"%}
+                <a href="/BackgroundCheck/{{item[5]}}">Background Check Certificate</a>
+                {%endif%}
+            </div>
+          </div>
+        {% endfor %}
+        </div>
+        </div>
+
+    <style>
+        body{
+            background-color: #fff;
+        }
+        .card{
+            border-radius: 7%;
+            box-shadow: 2px 2px rgb(22, 22, 22);
+        }
+        .card-img-top{
+            border-top-left-radius: 7%;
+            border-top-right-radius: 7%;
+        }
+        .top{
+            padding-top: 5rem;
+        }      
+        .modal-header{
+            border-top-left-radius: 15% !important;
+            border-top-right-radius: 15% !important;
+        }
+        .modal-content{
+            border-radius: 7% !important;
+        }
+    </style>
+    
+
+
+</body>
+</html>

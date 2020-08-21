@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <title>Loconomic Fulcrum Employee/Volunteer Portal</title>
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+        <meta charset="utf-8">
+        <link type="text/css" rel="stylesheet" href="{{url_for('static', filename='styles3.css')}}"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap" rel="stylesheet">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <a class="navbar-brand" href="#">Loconomic Fulcrum</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="/listings">Consumer Portal</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/insertTxt">Business Portal</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/jobs">Hiring Portal</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="/add">Employee/Volunteer Portal<span class="sr-only">(current)</span></a>
+              </li>
+            </ul>
+            <span class="navbar-text">
+                Hello, <b>{{users[0][1]}} {{users[0][2]}}</b>!
+            </span>
+            <a href="/signout" class="btn btn-outline-secondary">Signout</a>
+          </div>
+        </nav>
+        
+    </head>
+    <body>
+      <div class="card">
+        <div class="card-body">
+        <form action="/add" method="POST" enctype="multipart/form-data">
+        <div class="grad" style="text-align: center;">
+            <div class="grad">
+              <h3>Enter Your Information Below</h3>
+            </div>
+            <div class="form-group" style="text-align: center;">
+                <label>Are you volunteering or looking for a job?</label>
+                <label class="text-danger">*</label>
+            </div>
+            <div class="form-group" style="text-align: center;">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="V/J" id="inlineRadio1" value="Volunteer" required>
+                    <label class="form-check-label" for="inlineRadio1">I am a Volunteer</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="V/J" id="inlineRadio2" value="Job" required>
+                    <label class="form-check-label" for="inlineRadio2">I am looking for a job</label>
+                </div>
+            </div>
+            <div class="form-group" style="text-align: center;">
+                <label>Email</label>
+                <label class="text-danger">*</label>
+                <center><input style="width: 30%;" type="email" class="form-control" name="phone" required></center>
+            </div>
+            <div class="form-group" style="text-align: center;">
+                <label>Start Time</label>
+                <label class="text-danger">*</label>
+                <center><input style="width: 30%;" type="time" class="form-control" name="stime" required></center>
+            </div>
+            <div class="form-group" style="text-align: center;">
+                <label>End Time</label>
+                <label class="text-danger">*</label>
+                <center><input style="width: 30%;" type="time" class="form-control" name="etime" required></center>
+            </div>
+            <div class="form-group" style="text-align: center;">
+                <label>Background Check Certificate</label>
+                <center><input style="width: 35%;" type="file" class="form-control" name="bcheck"></center>
+                <small form-text text-muted>Leave blank if you are a Volunteer</small>
+            </div>
+            <div class="form-group" style="text-align: center;">
+                <label>Image of you</label>
+                <label class="text-danger">*</label>
+                <center><input style="width: 35%;" name="yourImage" type="file" class="form-control" required></center>
+            </div>
+            <div class="form-group" style="text-align: center;">
+                <button class="btn btn-primary" type="submit">Submit</button>
+                
+            </div>
+            <label class="text-danger">{{message}}</label>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+        <style>
+          .card{
+            margin-top: 5rem;
+            margin-left: 20rem;
+            margin-right: 20rem;
+            margin-bottom: 5rem;
+            background-color: #ffffff; /* For browsers that do not support gradients */
+            border-radius: 7%;
+            box-shadow: 3.5px 3.5px rgb(22, 22, 22);
+          }
+          .grad{
+            padding-top: 0.5rem;
+          }
+          body{
+            background-color: rgb(82, 82, 82);
+          }
+        </style>
+
+    </body>
+</html> 
+
+
+
+
+

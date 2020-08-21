@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <meta charset="UTF-8">
+    <title>Loconomic Fulcrum Business Portal</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}"/>
+    <script>
+    function passUpdateValues(id, noi, desc, price, quan) {
+        document.getElementById("upid").value = id;
+        document.getElementById("upnoi").value = noi;
+        document.getElementById("updesc").value = desc;
+        document.getElementById("upprice").value = price;
+        document.getElementById("upquan").value = quan;
+   }
+
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap" rel='stylesheet' type='text/css'>
+</head>
+<body>
+<div class="container-fluid">
+  <nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light changeNav">
+    <a class="navbar-brand" href="/">Loconomic Fulcrum</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/listings">Consumer Portal</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/insertTxt">Business Portal<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/jobs">Hiring Portal</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/add">Employee/Volunteer Portal</a>
+        </li>
+      </ul>
+      <span class="navbar-text">
+          Hello, <b>{{users[0][1]}} {{users[0][2]}}</b>!
+      </span>
+      <a href="/signout" class="btn btn-outline-secondary">Signout</a>
+    </div>
+  </nav>
+<div class="centered">
+        <div class="row curved">
+            <h2>List item for Sale</h2>
+            <a href="#table">View all items</a>
+            <form action="/insert" method="post" enctype="multipart/form-data">
+              <div class="form-group">
+                <label for="noi">Name of item:</label>
+                <input type="text" name="noi" class="form-control" id="noi" required>
+              </div>
+              <div class="form-group">
+                <label for="desc">Description:</label>
+                <input type="text" name="desc" class="form-control" id="desc" required>
+              </div>
+              <div class="form-group">
+                <label for="price">Price (USD):</label>
+                <input type="number" min="1" step="any" name="price" class="form-control" id="price" required>
+              </div>
+              <div class="form-group">
+                <label for="quan">Quantity:</label>
+                <input type="number" min="1" step="any" name="quan" class="form-control" id="quan" required>
+              </div>
+              <div class="form-group">
+                <label for="imgFile">Image:</label>
+                <input type="file" class="form-control-file btn" id="imgFile" name="imgFile">
+              </div>
+              <button type="submit" class="btn btn-info">Insert</button>
+            </form>
+
+        </div>
+    </div>
+
+        <h5 id="table">Your items up for sale:</h5>
+
+          <table class="table">
+            <thead>
+              <th scope="col">Image</th>
+              <th scope="col">Item Name</th>
+              <th scope="col">Description</th>
+              <th scope="col">Price</th>
+              <th scope="col">Date</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Actions</th>
+            </thead>
+            <tbody>
+              {% for item in response %}
+                            <tr>
+                                <td style="display:none;">{{ item[0] }}</td>
+                                <td><img src='data:;base64,{{item[8]}}' style="width: 50px;"></td>
+                                <td>{{ item[1] }}</td>
+                                <td>{{ item[2] }}</td>
+                                <td>{{ item[3] }}</td>
+                                <td>{{ item[4] }}</td>
+                                <td>{{ item[6] }}</td>
+                                <td>
+                                    <form action="/delete" method="post"><input name="idfieldDelete" type="hidden" value="{{ item[0] }}"><input name="idfieldDeleteImg" type="hidden" value="{{ item[7] }}"><button class="btn btn-danger" type="submit"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+  <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+</svg></button></form>
+                                    <button class="btn btn-warning" type="button" onclick="passUpdateValues('{{ item[0] }}', '{{ item[1] }}', '{{ item[2] }}', '{{ item[3] }}', '{{ item[6] }}')" data-toggle="modal" data-target="#updateModal"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+</svg></button>
+                                </td>
+                            </tr>
+               {% endfor %}
+            </tbody>
+          </table>
+
+            <div class="modal fade" id="updateModal" class="modal" tabindex="-1" role="dialog">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Update Record</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <form action="/update" method="post">
+                      <div class="modal-body">
+                            <input type="hidden" value="" name="upid" id="upid">
+                            <div class="form-group">
+                                <label for="upnoi">Name of item:</label>
+                                <input type="text" value="" name="upnoi" class="form-control" id="upnoi" required>
+                              </div>
+                              <div class="form-group">
+                                <label for="updesc">Description:</label>
+                                <input type="text" value="" name="updesc" class="form-control" id="updesc" required>
+                              </div>
+                              <div class="form-group">
+                                <label for="price">Price:</label>
+                                <input type="text" value="" name="upprice" class="form-control" id="upprice" required>
+                              </div>
+                              <div class="form-group">
+                                <label for="upquan">Quantity:</label>
+                                <input type="text" value="" name="upquan" class="form-control" id="upquan" required>
+                              </div>
+
+                          </div>
+                      <div class="modal-footer">
+                        <button type="submit" class="btn btn-info">Save changes</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+    <!-- Bootstrap Javascript Code -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+</div>
+</body>
+</html>
